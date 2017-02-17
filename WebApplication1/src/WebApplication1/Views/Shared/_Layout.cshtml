@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplication1</title>
+    <title>@ViewData["Title"] - ASP.NET Core - Authentication</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -27,13 +27,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WebApplication1</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ASP.NET Core - Authentication</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @{if(User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="" asp-controller="Role" asp-action="Index">Add Role</a></li>
+                            <li><a asp-area="" asp-controller="Role" asp-action="AddUserToRole">Assign Role</a></li>
+                        }}
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -43,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - WebApplication1</p>
+            <p>&copy; 2017 - ASP.NET Core - Authentication</p>
         </footer>
     </div>
 
