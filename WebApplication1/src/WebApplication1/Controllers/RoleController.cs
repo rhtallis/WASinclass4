@@ -16,10 +16,12 @@ namespace WebApplication1.Controllers
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> _roleManager;
+        private ApplicationDbContext _context;
 
         public RoleController (ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -46,7 +48,36 @@ namespace WebApplication1.Controllers
                     ViewBag.Message = "Role successfully added.";
                 }
             }
+            return View();
+        }
 
+        [HttpGet]
+        public IActionResult AddUserToRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddUserToRole(UserRoleVM userRoleVM)
+        {
+            if (ModelState.IsValid) {
+                using (_context)
+                    try
+                    {
+                        var user = _context.Users.Where(u => u.UserName == userRoleVM.UserName).FirstOrDefault();
+                        var role = _context.Roles.Where(r => r.Name == userRoleVM.RoleName).FirstOrDefault();
+                        var userRole = new IdentityUserRole<string>();
+                        userRole.RoleId = role.Id;
+                        userRole.UserId = user.Id;
+                        _context.UserRoles.Add(userRole);
+                        _context.SaveChanges();
+                        ViewBag.Message = "User Successfully Added to Role";
+                    } catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        ViewBag.Message = "Something went wrong. Please try again.";
+                    }
+                }
             return View();
         }
     }
