@@ -22,7 +22,7 @@ namespace WebApplication1.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=tcp:s11.winhost.com;Initial Catalog = DB_110724_mycore; User ID = DB_110724_mycore_user; Password=mycore1234;");
+            optionsBuilder.UseSqlServer(@"Data Source=tcp:s11.winhost.com;Initial Catalog = DB_110724_mycore; User ID = DB_110724_mycore_user; Password=**********;");
         }
 
 
